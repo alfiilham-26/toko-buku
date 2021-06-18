@@ -154,8 +154,8 @@
                                     class="form-control diskon">
                                     <input type="hidden" name="jumlah" required
                                     class="form-control jumlah">
-                                    <input type="text" name="jumlah" required
-                                    class="form-control jumlah">
+                                    <input type="Hidden" name="total" required
+                                    class="form-control total">
                                 </div>
                             </div>
                             <div class="modal-footer">

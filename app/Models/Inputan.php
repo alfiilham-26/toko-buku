@@ -100,4 +100,33 @@ class Inputan extends Model
     	$kodeBaru = "FK".$addNol.$incrementKode;
     	return $kodeBaru;
     }
+    public function DataBukuGet($id){
+        return $data = DB::table('tbl_buku')->where(['id'=> $id])->get();
+    }
+    public function InputPenjualan($payload){
+        return $data = DB::table('tbl_tmp_penjualan')->insert($payload);
+    }
+    public function GetPenjualan(){
+        return $data = DB::table('tbl_tmp_penjualan')
+        ->leftJoin('tbl_buku', 'tbl_buku.id', '=', 'tbl_tmp_penjualan.id_buku')
+        ->get();
+    }
+    public function InputPenjualanDelete($id){
+        return $data = DB::table('tbl_tmp_penjualan')->where(['id_buku'=> $id])->delete();
+    }
+    public function CheckOut($payload){
+        return $data = DB::table('tbl_penjualan')->insert($payload);
+    }
+    public function HapusTmp(){
+        return $data = DB::table('tbl_tmp_penjualan')->delete();
+    }
+    public function DataPenjualanGetKode($kode){
+        return $data = DB::table('tbl_penjualan')
+            ->where(['id_penjualan'=> $kode])
+            ->leftJoin('tbl_buku', 'tbl_buku.id', '=', 'tbl_penjualan.id_buku')
+            ->get();
+    }
+    public function UbahProfil($payload,$id){
+        return $data = DB::table('tbl_user')->where(['id_user'=>$id])->update($payload);
+    }
 }

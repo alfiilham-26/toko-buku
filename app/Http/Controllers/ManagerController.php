@@ -238,4 +238,187 @@ class ManagerController extends Controller
                 ->with('tmp', $tmp)
                 ->with('date', $date);
     }
+    public function InputFaktur(Request $req){
+        $data = new Inputan;
+        $laporan = new Laporan;
+        $template = $laporan->Template();
+        $response = $laporan->DataPenjualanFaktur();
+        $data = json_decode($response);
+        $tmp = json_decode($template);
+        $tanggal = Carbon::now();
+        $date = $tanggal->toDateString();
+        return view('manager.laporan.input_faktur')
+                ->with('data', $data)
+                ->with('tmp', $tmp)
+                ->with('date', $date);
+    }
+    public function DataPerFaktur(Request $req){
+        $data = new Inputan;
+        $laporan = new Laporan;
+        $kode = $req['idfaktur'];
+        $template = $laporan->Template();
+        $response = $data->DataPenjualanGetKode($kode);
+        $data = json_decode($response);
+        $tmp = json_decode($template);
+        $tanggal = Carbon::now();
+        $date = $tanggal->toDateString();
+        $req->session()->put('kode', $kode);
+        return view('manager.laporan.data_perfaktur')
+                ->with('data', $data)
+                ->with('tmp', $tmp)
+                ->with('date', $date);
+    }
+    public function CetakDataPerFaktur(Request $req){
+        $data = new Inputan;
+        $laporan = new Laporan;
+        $kode = $req->session()->get('kode', null);
+        $template = $laporan->Template();
+        $response = $data->DataPenjualanGetKode($kode);
+        $data = json_decode($response);
+        $tmp = json_decode($template);
+        $tanggal = Carbon::now();
+        $date = $tanggal->toDateString();
+        return view('manager.laporan.cetak_data_perfaktur')
+                ->with('data', $data)
+                ->with('tmp', $tmp)
+                ->with('date', $date);
+    }
+    public function DataPenjualan(){
+        $data = new Inputan;
+        $laporan = new Laporan;
+        $template = $laporan->Template();
+        $response = $laporan->DataPenjualanAll();
+        $transaksi = $laporan->DataPenjualanSum();
+        $data = json_decode($response);
+        $tmp = json_decode($template);
+        $tanggal = Carbon::now();
+        $date = $tanggal->toDateString();
+        return view('manager.laporan.data_penjualan')
+                ->with('transaksi', $transaksi)
+                ->with('data', $data)
+                ->with('tmp', $tmp)
+                ->with('date', $date);
+    }
+    public function CetakDataPenjualan(){
+        $data = new Inputan;
+        $laporan = new Laporan;
+        $template = $laporan->Template();
+        $response = $laporan->DataPenjualanAll();
+        $transaksi = $laporan->DataPenjualanSum();
+        $data = json_decode($response);
+        $tmp = json_decode($template);
+        $tanggal = Carbon::now();
+        $date = $tanggal->toDateString();
+        return view('manager.laporan.cetak_data_penjualan')
+                ->with('transaksi', $transaksi)
+                ->with('data', $data)
+                ->with('tmp', $tmp)
+                ->with('date', $date);
+    }
+    public function DataPenjualanBuku(Request $req){
+        $laporan = new Laporan;
+        $tanggal = Carbon::now();
+        $dateakhir = $tanggal->toDateString();
+        $date = $tanggal->subDays(29);
+        $dateawal = $date->toDateString();
+        $datapenjualan = $laporan->DataPenjualanTanggalIndex();
+        $template = $laporan->Template();
+        $data = json_decode($datapenjualan);
+        $tmp = json_decode($template);
+        $tanggal = Carbon::now();
+        $date = $tanggal->toDateString();
+        $transaksi = $laporan->DataPenjualanPerTanggalSum($dateakhir,$dateawal);
+        $req->session()->put('dateawal', $dateawal);
+        $req->session()->put('dateakhir', $dateakhir);
+        return view('manager.laporan.data_pertanggal')
+                ->with('data', $data)
+                ->with('transaksi', $transaksi)
+                ->with('dateakhir', $dateakhir)
+                ->with('dateawal', $dateawal)
+                ->with('tmp', $tmp)
+                ->with('date', $date);
+    }
+    public function CariDataPenjualanBuku(Request $req){
+        $laporan = new Laporan;
+        $dateawal = $req['tawal'];
+        $dateakhir = $req['takhir'];
+        $datapenjualan = $laporan->DataPenjualanPerTanggal($dateakhir,$dateawal);
+        $template = $laporan->Template();
+        $data = json_decode($datapenjualan);
+        $tmp = json_decode($template);
+        $tanggal = Carbon::now();
+        $date = $tanggal->toDateString();
+        $req->session()->put('dateawal', $dateawal);
+        $req->session()->put('dateakhir', $dateakhir);
+        $transaksi = $laporan->DataPenjualanPerTanggalSum($dateakhir,$dateawal);
+        return view('manager.laporan.data_pertanggal')
+                ->with('data', $data)
+                ->with('transaksi', $transaksi)
+                ->with('dateakhir', $dateakhir)
+                ->with('dateawal', $dateawal)
+                ->with('tmp', $tmp)
+                ->with('date', $date);
+    }
+    public function CetakDataPenjualanBuku(Request $req){
+        $laporan = new Laporan;
+        $dateawal = $req->session()->get('dateawal', null);
+        $dateakhir = $req->session()->get('dateakhir', null);
+        $datapenjualan = $laporan->DataPenjualanPerTanggal($dateakhir,$dateawal);
+        $template = $laporan->Template();
+        $data = json_decode($datapenjualan);
+        $tmp = json_decode($template);
+        $tanggal = Carbon::now();
+        $date = $tanggal->toDateString();
+        $transaksi = $laporan->DataPenjualanPerTanggalSum($dateakhir,$dateawal);
+        return view('manager.laporan.cetak_data_pertanggal')
+                ->with('data', $data)
+                ->with('transaksi', $transaksi)
+                ->with('dateakhir', $dateakhir)
+                ->with('dateawal', $dateawal)
+                ->with('tmp', $tmp)
+                ->with('date', $date);
+    }
+    public function GetProfilPerusahaan(){
+        $data = new Laporan;
+        $profil = $data->GetProfil();
+        $data = json_decode($profil);
+        foreach($data as $data){}
+        return view('manager.pengaturan.profil')
+                ->with('data', $data);
+
+    }
+    public function GetProfilManager(Request $req){
+        $user = $req->session()->get('user', null);
+        $template = "manager";
+        $data = json_decode($user);
+        foreach($data as $data){}
+        $id = $data->id_user;
+        $req->session()->put('id' ,$id);
+        return view ('layout.profil_manager')
+               ->with('data', $data);
+    }
+    public function UbahProfilManager(Request $req){
+        $data = new Inputan;
+        $id=$req->session()->get('id', null);
+        $nama = $req['nama'];
+        $alamat = $req['alamat'];
+        $notlpn = $req['notlpn'];
+        $status = $req['status'];
+        $username= $req['username'];
+        $password = $req['password'];
+        $akses = $req['akses'];
+        $payload=[
+            'nama' => $nama,
+            'alamat' => $alamat,
+            'no_tlpn' => $notlpn,
+            'status' => $status,
+            'username' => $username,
+            'password' => $password,
+            'akses' => $akses,
+        ];
+        $response = $data->UbahProfil($payload,$id);
+        if($response == '1'){
+            return redirect('/Dashboard/manager');
+        }
+    }
 }

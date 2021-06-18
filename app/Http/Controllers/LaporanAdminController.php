@@ -238,4 +238,38 @@ class LaporanAdminController extends Controller
                 ->with('tmp', $tmp)
                 ->with('date', $date);
     }
+    public function GetProfilAdmin(Request $req){
+        $user = $req->session()->get('user', null);
+        $template = "manager";
+        $data = json_decode($user);
+        foreach($data as $data){}
+        $id = $data->id_user;
+        $req->session()->put('id' ,$id);
+        return view ('layout.profil_admin')
+               ->with('data', $data);
+    }
+    public function UbahProfilAdmin(Request $req){
+        $data = new Inputan;
+        $id=$req->session()->get('id', null);
+        $nama = $req['nama'];
+        $alamat = $req['alamat'];
+        $notlpn = $req['notlpn'];
+        $status = $req['status'];
+        $username= $req['username'];
+        $password = $req['password'];
+        $akses = $req['akses'];
+        $payload=[
+            'nama' => $nama,
+            'alamat' => $alamat,
+            'no_tlpn' => $notlpn,
+            'status' => $status,
+            'username' => $username,
+            'password' => $password,
+            'akses' => $akses,
+        ];
+        $response = $data->UbahProfil($payload,$id);
+        if($response == '1'){
+            return redirect('/Dashboard/admin');
+        }
+    }
 }

@@ -5,8 +5,8 @@
 
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <title>@yield('title')</title>
+    <meta name="csrf-token" content="{{ csrf_token() }}" />
+    <title>Admin @yield('title')</title>
 
     <link href="{{asset('css/bootstrap.min.css')}}" rel="stylesheet">
     <link href="{{asset('font-awesome/css/font-awesome.css')}}" rel="stylesheet">
@@ -24,20 +24,17 @@
                 <li class="nav-header">
                     <div class="dropdown profile-element">
                         <a data-toggle="dropdown" class="dropdown-toggle" href="#">
-                            <span class="block m-t-xs font-bold">David Williams</span>
-                            <span class="text-muted text-xs block">Art Director <b class="caret"></b></span>
+                            <span class="block m-t-xs font-bold">Administrator</span>
+                            <span class="text-muted text-xs block">More <b class="caret"></b></span>
                         </a>
                         <ul class="dropdown-menu animated fadeInRight m-t-xs">
-                            <li><a class="dropdown-item" href="profile.html">Profile</a></li>
-                            <li><a class="dropdown-item" href="contacts.html">Contacts</a></li>
-                            <li><a class="dropdown-item" href="mailbox.html">Mailbox</a></li>
-                            <li class="dropdown-divider"></li>
-                            <li><a class="dropdown-item" href="login.html">Logout</a></li>
+                            <li><a class="dropdown-item" href="/profil-admin">Profile</a></li>
+                            <li><a class="dropdown-item" href="/logout">Logout</a></li>
                         </ul>
                     </div>
                 </li>
-                <li class="{{ request()->is('Dashboard') ? 'active' : '' }}">
-                    <a href="/Dashboard"><i class="fa fa-laptop"></i> <span class="nav-label">Dashboard</span></a>
+                <li class="{{ request()->is('Dashboard/admin') ? 'active' : '' }}">
+                    <a href="/Dashboard/admin"><i class="fa fa-laptop"></i> <span class="nav-label">Dashboard</span></a>
                 </li>
                 <li class="{{ request()->is('input-distributor')||request()->is('input-buku') ? 'active' : '' }}">
                     <a href=""><i class="fa fa-th-large"></i> <span class="nav-label">Inputan</span> <span class="fa arrow"></span></a>
@@ -84,7 +81,7 @@
                     <span class="m-r-sm text-muted welcome-message">Selamat Datang Di Toko Buku Rostik</span>
                 </li>
                 <li>
-                    <a href="login.html">
+                    <a href="/logout">
                         <i class="fa fa-sign-out"></i> Log out
                     </a>
                 </li>

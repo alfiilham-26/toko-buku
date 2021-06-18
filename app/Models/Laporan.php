@@ -36,4 +36,47 @@ class Laporan extends Model
         ->whereBetween('tanggal', [$dateawal, $dateakhir])
         ->get();
     }
+    public function DataPenjualanAll(){
+        return $data = DB::table('tbl_penjualan')
+        ->leftJoin('tbl_buku', 'tbl_buku.id', '=', 'tbl_penjualan.id_buku')
+        ->distinct()
+        ->orderBy('id_penjualan', 'asc')
+        ->get();
+    }
+    public function DataPenjualanFaktur(){
+         return $data = DB::table('tbl_penjualan')
+        ->leftJoin('tbl_buku', 'tbl_buku.id', '=', 'tbl_penjualan.id_buku')
+        ->select('id_penjualan')
+        ->distinct()
+        ->orderBy('id_penjualan', 'asc')
+        ->get();
+    }
+    public function DataPenjualanSum(){
+         return $data = DB::table('tbl_penjualan')->select('id_penjualan')->distinct()->get()->count();
+    }
+    public function DataPenjualanTanggalIndex(){
+        $tanggal = Carbon::now();
+        $dateakhir = $tanggal->toDateString();
+        $date = $tanggal->subDays(29);
+        $dateawal = $date->toDateString();
+        return $data = DB::table('tbl_penjualan')
+        ->leftJoin('tbl_buku', 'tbl_buku.id', '=', 'tbl_penjualan.id_buku')
+        ->whereBetween('tanggal', [$dateawal, $dateakhir])
+        ->orderBy('id_penjualan', 'asc')
+        ->get();
+    }
+    public function DataPenjualanPerTanggal($dateakhir,$dateawal){
+        return $data = DB::table('tbl_penjualan')
+        ->leftJoin('tbl_buku', 'tbl_buku.id', '=', 'tbl_penjualan.id_buku')
+        ->whereBetween('tanggal', [$dateawal, $dateakhir])
+        ->orderBy('id_penjualan', 'asc')
+        ->get();
+    }
+    public function DataPenjualanPerTanggalSum($dateakhir,$dateawal){
+        return $data = DB::table('tbl_penjualan')->select('id_penjualan')->whereBetween('tanggal', [$dateawal, $dateakhir])->distinct()->get()->count();
+    }
+    public function GetProfil(){
+        return $data = DB::table('tbl_setting_lap')->get();
+    }
+   
 }

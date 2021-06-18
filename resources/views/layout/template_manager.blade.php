@@ -24,24 +24,24 @@
                 <li class="nav-header">
                     <div class="dropdown profile-element">
                         <a data-toggle="dropdown" class="dropdown-toggle" href="#">
-                            <span class="block m-t-xs font-bold">David Williams</span>
-                            <span class="text-muted text-xs block">Art Director <b class="caret"></b></span>
+                            <span class="block m-t-xs font-bold">MANAGER</span>
+                            <span class="text-muted text-xs block">More <b class="caret"></b></span>
                         </a>
                         <ul class="dropdown-menu animated fadeInRight m-t-xs">
-                            <li><a class="dropdown-item" href="profile.html">Profile</a></li>
-                            <li><a class="dropdown-item" href="contacts.html">Contacts</a></li>
-                            <li><a class="dropdown-item" href="mailbox.html">Mailbox</a></li>
-                            <li class="dropdown-divider"></li>
-                            <li><a class="dropdown-item" href="login.html">Logout</a></li>
+                            <li><a class="dropdown-item" href="/profil-manager">Profile</a></li>
+                            <li><a class="dropdown-item" href="/logout">Logout</a></li>
                         </ul>
                     </div>
                 </li>
-                <li class="{{ request()->is('Dashboard') ? 'active' : '' }}">
-                    <a href="/Dashboard"><i class="fa fa-laptop"></i> <span class="nav-label">Dashboard</span></a>
+                <li class="{{ request()->is('Dashboard/manager') ? 'active' : '' }}">
+                    <a href="/Dashboard/manager"><i class="fa fa-laptop"></i> <span class="nav-label">Dashboard</span></a>
                 </li>
-                <li class="{{ request()->is('manager/laporan-data-buku')||request()->is('manager/laporan-data-buku-penulis')||request()->is('manager/laporan-data-buku-penulis/penulis')||request()->is('manager/laporan-buku-sering-terjual')||request()->is('manager/laporan-buku-tidak-terjual')||request()->is('manager/laporan-data-pasok-buku')||request()->is('manager/laporan-data-pasok-buku/cari')||request()->is('manager/laporan-data-buku-distributor')||request()->is('manager/laporan-data-buku-distributor/distributor') ? 'active' : '' }}">
+                <li class="{{ request()->is('manager/laporan-data-buku')||request()->is('manager/laporan-data-buku-penulis')||request()->is('manager/laporan-data-buku-penulis/penulis')||request()->is('manager/laporan-buku-sering-terjual')||request()->is('manager/laporan-buku-tidak-terjual')||request()->is('manager/laporan-data-pasok-buku')||request()->is('manager/laporan-data-pasok-buku/cari')||request()->is('manager/laporan-data-buku-distributor')||request()->is('manager/laporan-data-buku-distributor/distributor')||request()->is('manager/cetak-faktur')||request()->is('manager/semua-penjualan')||request()->is('manager/penjualan-pertanggal')||request()->is('manager/penjualan-pertanggal/cari')||request()->is('manager/data-penjualan-perfaktur') ? 'active' : '' }}">
                     <a href="#"><i class="fa fa-bar-chart-o"></i> <span class="nav-label">Laporan</span><span class="fa arrow"></span></a>
                     <ul class="nav nav-second-level collapse">
+                        <li><a href="/manager/cetak-faktur">Cetak Faktur</a></li>
+                        <li><a href="/manager/semua-penjualan">Semua Penjualan</a></li>
+                        <li><a href="/manager/penjualan-pertanggal">Penjualan Pertanggal</a></li>
                         <li><a href="/manager/laporan-data-buku">Semua Data Buku</a></li>
                         <li><a href="/manager/laporan-data-buku-penulis">Filter Penulis Buku</a></li>
                         <li><a href="/manager/laporan-buku-sering-terjual">Buku Yang Sering Terjual</a></li>
@@ -50,10 +50,10 @@
                         <li><a href="/manager/laporan-data-buku-distributor">Filter Pasok Buku</a></li>
                     </ul>
                 </li>
-                <li class="{{ request()->is('input-pasokbuku') ? 'active' : '' }}">
+                <li class="{{ request()->is('profil-perusahaan') ? 'active' : '' }}">
                     <a href=""><i class="fa fa fa-diamond"></i> <span class="nav-label">Pengaturan</span> <span class="fa arrow"></span></a>
                     <ul class="nav nav-second-level">
-                        <li><a href="/manager/profil">Profil</a></li>
+                        <li><a href="/profil-perusahaan">Profil</a></li>
                     </ul>
                 </li>
             </ul>
@@ -77,7 +77,7 @@
                     <span class="m-r-sm text-muted welcome-message">Selamat Datang Di Toko Buku Rostik</span>
                 </li>
                 <li>
-                    <a href="login.html">
+                    <a href="/logout">
                         <i class="fa fa-sign-out"></i> Log out
                     </a>
                 </li>
