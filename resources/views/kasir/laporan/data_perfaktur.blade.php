@@ -60,11 +60,14 @@
                                     $jumlahbuku = 0;
                                     ?>
                                     @foreach($data as $data)
+                                    <?php
+                                    $jual_rupiah = "Rp " . number_format($data->harga_jual,2,',','.');
+                                    ?>
                                     <tr>
                                         <td>{{$no}}</td>
                                         <td>{{$data->judul}}</td>
                                         <td>{{$data->jumlah_beli}}</td>
-                                        <td>{{$data->harga_jual}}</td>
+                                        <td>{{$jual_rupiah}}</td>
                                         <td>{{$data->ppn}}%</td>
                                         <td>{{$data->diskon}}%</td>
                                         <?php

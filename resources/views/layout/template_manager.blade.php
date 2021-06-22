@@ -50,10 +50,11 @@
                         <li><a href="/manager/laporan-data-buku-distributor">Filter Pasok Buku</a></li>
                     </ul>
                 </li>
-                <li class="{{ request()->is('profil-perusahaan') ? 'active' : '' }}">
+                <li class="{{ request()->is('profil-perusahaan')||request()->is('manager/tambah-user') ? 'active' : '' }}">
                     <a href=""><i class="fa fa fa-diamond"></i> <span class="nav-label">Pengaturan</span> <span class="fa arrow"></span></a>
                     <ul class="nav nav-second-level">
                         <li><a href="/profil-perusahaan">Profil</a></li>
+                        <li><a href="/manager/tambah-user">User</a></li>
                     </ul>
                 </li>
             </ul>
@@ -86,12 +87,11 @@
     </nav>
         @yield('content')
         <div class="footer">
-            <div class="float-right">
-                10GB of <strong>250GB</strong> Free.
-            </div>
+        <div class="footer">
             <div>
-                <strong>Copyright</strong> Example Company &copy; 2014-2018
+                <strong>Copyright</strong> PT Rostik &copy; 2021
             </div>
+        </div>  
         </div>
     </div>
 

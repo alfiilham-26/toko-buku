@@ -10,6 +10,7 @@ use App\Http\Controllers\LaporanAdminController;
 use App\Http\Controllers\KasirController;
 use App\Http\Controllers\ManagerController;
 use App\Http\Controllers\LaporanKasirController;
+use Illuminate\Support\Facades\Redirect;
 
 /*
 |--------------------------------------------------------------------------
@@ -62,7 +63,7 @@ Route::get('/laporan-buku-tidak-terjual/cetak', [LaporanAdminController::class, 
 
 Route::get('/laporan-data-pasok-buku', [LaporanAdminController::class, 'DataPasokBuku']);
 Route::post('/laporan-data-pasok-buku/cari', [LaporanAdminController::class, 'CariDataPasokBuku']);
-Route::get('/laporan-buku-tidak-terjual/cetak', [LaporanAdminController::class, 'CetakDataPasokBuku']);
+Route::get('/laporan-data-pasok-buku/cetak', [LaporanAdminController::class, 'CetakDataPasokBuku']);
 
 Route::get('/laporan-data-buku-distributor', [LaporanAdminController::class, 'IndexBukuPerdistributor']);
 Route::post('/laporan-data-buku-distributor/distributor', [LaporanAdminController::class, 'DataBukuPerdistributor']);
@@ -100,10 +101,14 @@ Route::get('/manager/penjualan-pertanggal/cetak', [ManagerController::class, 'Ce
 Route::get('/manager/penjualan-pertanggal', [ManagerController::class, 'DataPenjualanBuku']);
 Route::post('/manager/penjualan-pertanggal/cari', [ManagerController::class, 'CariDataPenjualanBuku']);
 
+Route::get('/manager/tambah-user', [ManagerController::class, 'GetUser']);
+Route::post('/manager/data-user/tambah', [ManagerController::class, 'AddUser']);
+Route::post('/manager/data-user/edit', [ManagerController::class, 'editUser']);
+Route::get('/manager/data-user/{id}/delete', [ManagerController::class, 'delete']);
+
 Route::get('/penjualan', [KasirController::class, 'index']);
 Route::get('/penjualan/{id}', [KasirController::class, 'GetData']);
-Route::get('/penjualan/keranjang', [KasirController::class, 'NewKeranjang']);
-Route::redirect('/penjualan/keranjang', [KasirController::class, 'NewKeranjang']);
+Route::get('/penjualan/keranjang/delete', [KasirController::class, 'NewKeranjang']);
 Route::get('/penjualan/keranjang/struk', [KasirController::class, 'Struk']);
 Route::get('/cetak/struk', [KasirController::class, 'CetakStruk']);
 Route::post('/penjualan/keranjang', [KasirController::class, 'Keranjang']);
@@ -122,6 +127,7 @@ Route::get('/penjualan-pertanggal', [LaporanKasirController::class, 'DataPenjual
 Route::post('/penjualan-pertanggal/cari', [LaporanKasirController::class, 'CariDataPenjualanBuku']);
 
 Route::get('/profil-perusahaan', [ManagerController::class, 'GetProfilPerusahaan']);
+Route::post('/manager/profil-perusahaan/ubah', [ManagerController::class, 'UbahProfilPerusahaan']);
 Route::get('/profil-manager', [ManagerController::class, 'GetProfilManager']);
 Route::post('/ubah-data-manager', [ManagerController::class, 'UbahProfilManager']);
 

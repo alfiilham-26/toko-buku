@@ -129,4 +129,16 @@ class Inputan extends Model
     public function UbahProfil($payload,$id){
         return $data = DB::table('tbl_user')->where(['id_user'=>$id])->update($payload);
     }
+    Public function GetUser(){
+        return $data = DB::table('tbl_user')->get();
+    }
+    public function GetProfilId($id){
+        return $data = DB::table('tbl_user')->where(['id_user'=>$id])->get();
+    }
+    Public function AddUser($payload){
+        return $data = DB::table('tbl_user')->insert($payload);
+    }
+    public function DataUserDelete($id){
+        return $data = DB::table('tbl_user')->where(['id_user'=>$id])->delete();
+    }
 }

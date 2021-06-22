@@ -78,5 +78,8 @@ class Laporan extends Model
     public function GetProfil(){
         return $data = DB::table('tbl_setting_lap')->get();
     }
+    public function UbahProfilPerusahaan($payload,$id){
+        return $data = DB::table('tbl_setting_lap')->where(['id_setting'=>$id])->update($payload);
+    }
    
 }

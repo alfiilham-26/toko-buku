@@ -146,6 +146,8 @@ class LaporanAdminController extends Controller
         $tmp = json_decode($template);
         $tanggal = Carbon::now();
         $date = $tanggal->toDateString();
+        $req->session()->put('dateawal', $dateawal);
+        $req->session()->put('dateakhir', $dateakhir);
         return view('admin.laporan.pasok_buku_distributor')
                 ->with('data', $data)
                 ->with('dateakhir', $dateakhir)
@@ -269,6 +271,9 @@ class LaporanAdminController extends Controller
         ];
         $response = $data->UbahProfil($payload,$id);
         if($response == '1'){
+            $data = new Inputan;
+            $response = $data->GetProfilId($id);
+            $req->session()->put('user', $response);
             return redirect('/Dashboard/admin');
         }
     }

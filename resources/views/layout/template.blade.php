@@ -90,12 +90,11 @@
     </nav>
         @yield('content')
         <div class="footer">
-            <div class="float-right">
-                10GB of <strong>250GB</strong> Free.
-            </div>
+        <div class="footer">
             <div>
-                <strong>Copyright</strong> Example Company &copy; 2014-2018
+                <strong>Copyright</strong> PT Rostik &copy; 2021
             </div>
+        </div>
         </div>
     </div>
 

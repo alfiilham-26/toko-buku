@@ -47,6 +47,10 @@
                                     ?>
                                     @foreach($data as $data)
                                     @if($data->id_distributor === $iddistributor)
+                                    <?php
+                                    $jual_rupiah = "Rp " . number_format($data->harga_jual,2,',','.');
+                                    $pokok_rupiah = "Rp " . number_format($data->harga_pokok,2,',','.');
+                                    ?>        
                                     <tr>
                                         <td>{{$no}}</td>
                                         <td>{{$data->id}}</td>
@@ -56,8 +60,8 @@
                                         <td>{{$data->penerbit}}</td>
                                         <td>{{$data->tahun}}</td>
                                         <td>{{$data->stok}}</td>
-                                        <td>{{$data->harga_pokok}}</td>
-                                        <td>{{$data->harga_jual}}</td>
+                                        <td>{{$pokok_rupiah}}</td>
+                                        <td>{{$jual_rupiah}}</td>
                                         <td>{{$data->ppn}}%</td>
                                         <td>{{$data->diskon}}%</td>
                                     </tr>  

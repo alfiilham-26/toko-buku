@@ -37,15 +37,18 @@
                                     $no = 1;
                                     ?>
                                     @foreach($data as $data)
+                                    <?php
+                                    $jual_rupiah = "Rp " . number_format($data->harga_jual,2,',','.');
+                                    ?>
                                     <tr>
                                         <td>{{$no}}</td>
                                         <td>{{$data->judul}}</td>
                                         <td>{{$data->noisbn}}</td>
                                         <td>{{$data->penulis}}</td>
-                                        <td>{{$data->harga_jual}}</td>  
+                                        <td>{{$jual_rupiah}}</td>  
                                         <td>{{$data->jumlah_penjualan}}</td>  
                                         <td>{{$data->total_penjualan}}</td>                                                           
-                                    </tr>                                      
+                                    </tr>                                            
                                     <?php
                                     $no++;
                                     ?>

@@ -19,7 +19,7 @@
                 </div>
                 <div class="col-sm-8">
                     <div class="title-action">
-                        <a href="/laporan-buku-tidak-terjual/cetak" target="_blank" class="btn btn-primary"><i class="fa fa-print"></i> Print Laporan </a>
+                        <a href="/laporan-data-pasok-buku/cetak" target="_blank" class="btn btn-primary"><i class="fa fa-print"></i> Print Laporan </a>
                     </div>
                 </div>
             </div>
@@ -89,6 +89,9 @@
                                     $no = 1;
                                     ?>
                                     @foreach($data as $data)
+                                    <?php
+                                    $jual_rupiah = "Rp " . number_format($data->harga_jual,2,',','.');
+                                    ?>  
                                     <tr>
                                         <td>{{$no}}</td>
                                         <td>{{$data->nama_distributor}}</td>
@@ -96,7 +99,7 @@
                                         <td>{{$data->noisbn}}</td>
                                         <td>{{$data->penulis}}</td>
                                         <td>{{$data->penerbit}}</td>
-                                        <td>{{$data->harga_jual}}</td>
+                                        <td>{{$jual_rupiah}}</td>
                                         <td>{{$data->stok}}</td>
                                         <td>{{$data->diskon}}</td>
                                         <td>{{$data->jumlah}}</td>

@@ -135,7 +135,7 @@
                                 </div>
                                 <label>Tanggal Penjualan :</label>
                                 <div class="form-group">
-                                    <input type="Date" name="tanggal" id="tanggal" required
+                                    <input type="date" name="tanggal" id="tanggal" required
                                         class="form-control">
                                 </div>
                             </div>
@@ -164,17 +164,34 @@
           type : "GET",
           url : '/penjualan/'+id,
         success: function (newdata){
-          var json = newdata,
+            var json = newdata,
           obj = JSON.parse(json);
-          $('#harga').val(obj.harga_jual);
+          var	number_string = obj.harga_jual.toString(),
+            sisa 	= number_string.length % 3,
+            rupiah 	= number_string.substr(0, sisa),
+            ribuan 	= number_string.substr(sisa).match(/\d{3}/g);       
+            if (ribuan) {
+                separator = sisa ? ',' : '';
+                rupiah += separator + ribuan.join(',');
+            }
+          $('#harga').val(rupiah);
         }
         });
     }
     function cek_total(){
+        var data = $("#harga").val();
+        var harga = data.replace(/\D/g, '');
         var jumlah = $("#jumlah").val();
-        var harga = $("#harga").val();
         var total = jumlah * harga;
-        $('#total').val(total);
+        var	number_string = total.toString(),
+            sisa 	= number_string.length % 3,
+            rupiah 	= number_string.substr(0, sisa),
+            ribuan 	= number_string.substr(sisa).match(/\d{3}/g);       
+            if (ribuan) {
+                separator = sisa ? ',' : '';
+                rupiah += separator + ribuan.join(',');
+            }
+        $('#total').val(rupiah);
     }
     function cek_kembalian(){
         var grandtotal = {{$grandtotal}};

@@ -387,6 +387,31 @@ class ManagerController extends Controller
                 ->with('data', $data);
 
     }
+    public function UbahProfilPerusahaan(Request $req){
+        $data = new Laporan;
+        $id=$req['id'];
+        $nama = $req['namaperusahaan'];
+        $alamat = $req['alamat'];
+        $notlpn = $req['notlpn'];
+        $web = $req['web'];
+        $logo= $req['logo'];
+        $email = $req['email'];
+        $filename= $req['namaperusahaan'] . '.' . $logo->extension();
+        $logo->move(public_path('logo_perusahaan'), $filename);
+        $payload=[
+            'nama_perusahaan' => $nama,
+            'alamat' => $alamat,
+            'no_tlpn' => $notlpn,
+            'web' => $web,
+            'logo' => $filename,
+            'email' => $email,
+        ];
+        $response = $data->UbahProfilPerusahaan($payload,$id);
+        if($response > 0){
+            return redirect('/profil-perusahaan');
+        }
+
+    }
     public function GetProfilManager(Request $req){
         $user = $req->session()->get('user', null);
         $template = "manager";
@@ -418,7 +443,73 @@ class ManagerController extends Controller
         ];
         $response = $data->UbahProfil($payload,$id);
         if($response == '1'){
+            $data = new Inputan;
+            $response = $data->GetProfilId($id);
+            $req->session()->put('user', $response);
             return redirect('/Dashboard/manager');
+        }
+    }
+    public function GetUser(Request $req){
+        $data = new Inputan;
+        $response = $data->GetUser();
+        $data = json_decode($response);
+        return view ('manager.pengaturan.user')
+               ->with('data', $data);
+    }
+    public function AddUser(Request $req){
+        $data = new Inputan;
+        $id = Uuid::uuid4()->toString();
+        $nama = $req['nama'];
+        $alamat = $req['alamat'];
+        $notlpn = $req['notlpn'];
+        $status = $req['status'];
+        $username= $req['username'];
+        $password = $req['password'];
+        $akses = $req['akses'];
+        $payload=[
+            'id_user' => $id,
+            'nama' => $nama,
+            'alamat' => $alamat,
+            'no_tlpn' => $notlpn,
+            'status' => $status,
+            'username' => $username,
+            'password' => $password,
+            'akses' => $akses,
+        ];
+        $response = $data->AddUser($payload);
+        if($response == 'true'){
+            return redirect('/manager/tambah-user');
+        }
+    }
+    public function EditUser(Request $req){
+        $data = new Inputan;
+        $id = $req['id'];
+        $nama = $req['nama'];
+        $alamat = $req['alamat'];
+        $notlpn = $req['notlpn'];
+        $status = $req['status'];
+        $username= $req['username'];
+        $password = $req['password'];
+        $akses = $req['akses'];
+        $payload=[
+            'nama' => $nama,
+            'alamat' => $alamat,
+            'no_tlpn' => $notlpn,
+            'status' => $status,
+            'username' => $username,
+            'password' => $password,
+            'akses' => $akses,
+        ];
+        $response = $data->UbahProfil($payload,$id);
+        if($response == '1'){
+            return redirect('/manager/tambah-user');
+        }
+    }
+    public function delete(Request $req, $id){
+        $data = new Inputan;
+        $response = $data->DataUserDelete($id);
+        if($response == '1'){
+            return redirect('/manager/tambah-user');
         }
     }
 }

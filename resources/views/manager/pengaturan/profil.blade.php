@@ -20,10 +20,12 @@
             </div>
             <div class="wrapper wrapper-content animated fadeInRight">
                 <div class="ibox-content p-xl">
-                    <form action="/manager/data-penjualan-perfaktur" method="POST">
+                    <form action="/manager/profil-perusahaan/ubah" method="POST" enctype="multipart/form-data">
                         @csrf
                         <label>Nama Perusahaan :</label>
                         <div class="form-group">
+                            <input type="hidden" name="id"  value="{{$data->id_setting}}" required
+                                class="form-control">
                             <input type="text" name="namaperusahaan"  value="{{$data->nama_perusahaan}}" required
                                 class="form-control">
                         </div>
@@ -49,11 +51,12 @@
                         </div>
                         <label>Logo Laporan :</label>
                         <div class="form-group">
-                            <input type="file" name="logo"  value="{{$data->logo}}" required
+                            <input type="file" name="logo" value="{{$data->logo}}" required
                                 class="form-file-input">
+                            <img src="{{url('logo_perusahaan/'.$data->logo)}}" alt="logo" width="150px">
                         </div>
                         <div class="">
-                            <input class="btn btn-primary" type="button" name=Ubah value=Ubah>  
+                            <input class="btn btn-primary" type="submit" name=Ubah value=Ubah>  
                         </div>
                     </form>
                 </div>
